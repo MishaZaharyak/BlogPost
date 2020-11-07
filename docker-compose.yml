@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  blogpost_db:
+    image: postgres:latest
+    container_name: blogpost_db
+    ports:
+      - 5432:5432/tcp
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    env_file:
+      - ./env_files/.env
+    networks:
+      - blogpost_db_network
+
+  blogpost_backend:
+    build:
+      context: ./project
+      dockerfile: Dockerfile
+    container_name: blogpost_backend
+    command: 'python manage.py runserver 0.0.0.0:8125'
+    volumes:
+      - ./project:/home/app
+      - ./media:/home/media
+      - ./static_volume:/home/staticfiles
+    env_file:
+      - ./env_files/.env
+    depends_on:
+      - blogpost_db
+    networks:
+      - blogpost_db_network
+
+volumes:
+  db_data:
+
+networks:
+  blogpost_db_network:
+    driver: bridge

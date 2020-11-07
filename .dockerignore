@@ -1,0 +1,10 @@
+.idea/
+venv/
+env*/
+__pycache__
+media*/
+static*/
+db_*/
+.env*
+.catch
+.git/
