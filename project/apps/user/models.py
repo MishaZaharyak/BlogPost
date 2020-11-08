@@ -55,3 +55,12 @@ class UserModel(AbstractUser):
         ordering = ['email']
         verbose_name = 'Admin User'
         verbose_name_plural = 'Admin Users'
+
+
+class VisitorModel(UserModel):
+    """ Model for site visitor user """
+
+    class Meta:
+        ordering = ['email']
+        verbose_name = 'Visitor'
+        verbose_name_plural = 'Visitors'

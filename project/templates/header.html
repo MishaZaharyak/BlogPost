@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">BlogPOST</a>
+    <a class="navbar-brand" href="#">{{request.user}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -10,19 +10,18 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{% url 'post:list' %}">Posts <span class="sr-only">(posts)</span></a>
             </li>
-
         </ul>
         <ul class="navbar-nav ml-auto">
-            {% if requert.user.is_authenticated %}
+            {% if request.user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log out</a>
+                    <a class="nav-link" href="{% url 'base:logout' %}">Log out</a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Log in</a>
+                    <a class="nav-link" href="{% url 'base:login' %}">Log in</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Registration</a>
+                    <a class="nav-link" href="{% url 'base:registration' %}">Registration</a>
                 </li>
             {% endif %}
         </ul>

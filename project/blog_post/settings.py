@@ -25,9 +25,11 @@ INSTALLED_APPS = [
     "debug_toolbar",  # todo: delete this
     'rest_framework',
     'corsheaders',
+    "crispy_forms",
     'django_cleanup.apps.CleanupConfig',
     "apps.user.apps.UserConfig",
-    "apps.post.apps.PostConfig"
+    "apps.post.apps.PostConfig",
+    "apps.base.apps.BaseConfig",
 ]
 
 AUTH_USER_MODEL = 'user.UserModel'
@@ -168,6 +170,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'utils.paginator.CustomPagination',
     'PAGE_SIZE': 5,
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
@@ -189,3 +192,6 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     'ROTATE_REFRESH_TOKENS': True,
 }
+
+# CRISPY form
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

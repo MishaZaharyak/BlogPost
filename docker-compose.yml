@@ -19,6 +19,8 @@ services:
       dockerfile: Dockerfile
     container_name: blogpost_backend
     command: 'python manage.py runserver 0.0.0.0:8125'
+    ports:
+      - 8125:8125/tcp
     volumes:
       - ./project:/home/app
       - ./media:/home/media

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}<title>{{ title }}</title>{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    <div class="col-8 m-auto">
+        <img src="{{ image }}" alt="{{ title }}" class="img-fluid"/>
+    </div>
+    <div class="d-flex align-items-end justify-content-between mb-3">
+        <h1 class="m-0 p-0">{{ title }}</h1>
+        <small class="text-muted">Posted: {{ created_at }}</small>
+    </div>
+    <p class="lead">{{ content }}</p>
+    <div class="d-flex align-items-end justify-content-start">
+        <p class="card-text pr-3 m-0 text-muted">Author: </p>
+        <p class="card-text pr-2 m-0"><small class="text-muted">{{ author.full_name }}</small></p>
+        <div style="max-width: 50px;">
+            <img src="{% if author.photo %}{{ author.photo }}{% else %}{% static 'img/No-photo-m.png' %}{% endif %}"
+                 class="img-thumbnail"
+                 alt="author">
+        </div>
+    </div>
+    {% if comments %}
+    <h5 class="mt-4">Comments:</h5>
+    {% endif %}
+</div>
+
+{% endblock %}

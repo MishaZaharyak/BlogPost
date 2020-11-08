@@ -1,6 +1,6 @@
 from rest_framework.permissions import AllowAny
 from apps.post.models import PostModel
-from apps.post.serializers import PostSerializer
+from apps.post.serializers import PostListSerializer, PostDetailSerializer
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 from rest_framework import generics
@@ -8,7 +8,7 @@ from rest_framework import generics
 
 class PostListView(generics.ListAPIView):
     queryset = PostModel.objects.all()
-    serializer_class = PostSerializer
+    serializer_class = PostListSerializer
     renderer_classes = [TemplateHTMLRenderer]
     permission_classes = [AllowAny]
 
@@ -26,4 +26,12 @@ class PostListView(generics.ListAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
-        return Response(self.get_paginated_response(serializer.data), template_name="post/post_list.html")
+        return Response(self.get_paginated_response(serializer.data), template_name="post/list.html")
+
+
+class PostDetailView(generics.RetrieveAPIView):
+    queryset = PostModel.objects.all()
+    serializer_class = PostDetailSerializer
+    renderer_classes = [TemplateHTMLRenderer]
+    permission_classes = [AllowAny]
+    template_name = "post/detail.html"

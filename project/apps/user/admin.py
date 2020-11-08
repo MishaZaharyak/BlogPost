@@ -3,7 +3,7 @@ from django.contrib.auth.models import Group
 from django.db.models import Count
 
 from .forms import UserForm
-from .models import UserModel
+from .models import UserModel, VisitorModel
 
 admin.site.unregister(Group)
 
@@ -31,3 +31,11 @@ class UserAdmin(admin.ModelAdmin):
         return obj.date_joined.strftime("%d.%m.%Y %H:%M")
 
     get_date_joined.short_description = "Date Joined"
+
+
+@admin.register(VisitorModel)
+class VisitorAdmin(admin.ModelAdmin):
+    list_display = ("get_full_name", 'email')
+
+    def get_full_name(self, obj):
+        return str(obj)

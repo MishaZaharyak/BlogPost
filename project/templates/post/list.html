@@ -1,13 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {{ request.user }}
     <div class="row">
         {% for obj in results %}
             <div class="col-sm-4 pt-3">
                 <div class="card">
-                    <img src="{{ obj.image }}" class="card-img-top" alt="{{ obj.title }}">
+                    <a href="{% url 'post:detail' obj.id %}">
+                        <img src="{{ obj.image }}" class="card-img-top" alt="{{ obj.title }}">
+                    </a>
                     <div class="card-body">
-                        <h5 class="card-title">{{ obj.title }}</h5>
+                        <h5 class="card-title"><a href="{% url 'post:detail' obj.id %}">{{ obj.title }}</a></h5>
                         <p class="card-text">{{ obj.content|truncatechars:100 }}</p>
                         <p class="card-text"><small class="text-muted">Created by: {{ obj.author }}</small></p>
                         <p class="card-text"><small class="text-muted">{{ obj.created_at }}</small></p>
