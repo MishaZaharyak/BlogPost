@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static crispy_forms_tags %}
 
 {% block title %}<title>{{ title }}</title>{% endblock %}
 
@@ -24,9 +24,38 @@
                  alt="author">
         </div>
     </div>
-    {% if comments %}
-    <h5 class="mt-4">Comments:</h5>
+    {% if request.user.visitormodel %}
+        <h5 class="mt-4">Leave a comment:</h5>
+        <div class="col-5 m-auto">
+            <form action="{% url 'post:comment-create' id %}" method="POST">
+                {% csrf_token %}
+                {{ comment_form|crispy }}
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    {% elif request.user.is_staff %}
+        <div class="alert alert-info mt-3" role="alert">
+            Log in as a "Visitor" user to leave a comment!
+        </div>
+    {% else %}
+        <div class="alert alert-info mt-3" role="alert">
+            Log in to leave a comment!
+        </div>
     {% endif %}
+    <h5 class="my-4">Comments:</h5>
+    <hr>
+    {% for comment in comments %}
+    <div class="media">
+        <img src="{{ comment.author.photo }}" style="max-width: 64px;" class="mr-3" alt="author">
+        <div class="media-body">
+            {{ comment.text }}
+            <p class="text-muted">Author: {{ comment.author.full_name }}</p>
+        </div>
+    </div>
+    <hr>
+    {% empty %}
+    <p class="text-muted">No comments yet</p>
+    {% endfor %}
 </div>
 
 {% endblock %}

@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="col-5 m-auto">
-    <form action="{% url 'base:registration' %}" method="POST">
+    <form action="{% url 'base:registration' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form|crispy }}
         <button type="submit" class="btn btn-primary">Submit</button>

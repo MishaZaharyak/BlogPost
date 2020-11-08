@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from apps.user.models import UserModel
+from apps.user.models import UserModel, VisitorModel
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,3 +11,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     def get_full_name(self, obj):
         return str(obj)
+
+
+class VisitorSerializer(UserSerializer):
+    class Meta:
+        model = VisitorModel
+        fields = ("first_name", "last_name", "email", "photo", "full_name")

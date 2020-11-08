@@ -1,8 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.db.models import Count
-
-from .forms import UserForm
+from .forms import UserForm, VisitorForm
 from .models import UserModel, VisitorModel
 
 admin.site.unregister(Group)
@@ -36,6 +35,7 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(VisitorModel)
 class VisitorAdmin(admin.ModelAdmin):
     list_display = ("get_full_name", 'email')
+    form = VisitorForm
 
     def get_full_name(self, obj):
         return str(obj)
