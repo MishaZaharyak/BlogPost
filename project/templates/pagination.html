@@ -1,0 +1,87 @@
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-3">
+        {% if number > 1 %}
+            <li class="page-item"><a class="page-link" href="{{ list_url }}?page=1">&laquo;</a></li>
+            <li class="page-item"><a class="page-link" href="{{ list_url }}?page={{ previous_page_number }}">‹</a></li>
+        {% endif %}
+
+        {% if previous_page_number|add:-2 > 0 %}
+            <li class="page-item"><a class="page-link" href="{{ list_url }}?page=1">1</a></li>
+
+            {% if previous_page_number|add:-3 > 0 %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ list_url }}?page={{ previous_page_number|add:-2 }}">
+                        <span>...</span>
+                    </a>
+                </li>
+
+
+            {% endif %}
+        {% endif %}
+
+        {% if previous_page_number|add:-1 > 0 %}
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ previous_page_number|add:-1 }}">
+                    {{ previous_page_number|add:-1 }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ previous_page_number }}">
+                    {{ previous_page_number }}
+                </a>
+            </li>
+
+        {% endif %}
+
+        <li class="page-item active" aria-current="page">
+          <span class="page-link">
+            {{ number }}
+            <span class="sr-only">(current)</span>
+          </span>
+        </li>
+
+        {% if has_next %}
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ next_page_number }}">
+                    {{ next_page_number }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if next_page_number|add:1 <= pagination.total_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ next_page_number|add:1 }}">
+                    {{ next_page_number|add:1 }}
+                </a>
+            </li>
+        {% endif %}
+
+        {% if next_page_number|add:2 <= total_pages %}
+            {% if next_page_number|add:3 <= total_pages %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ list_url }}?page={{ next_page_number|add:2 }}">
+                        <span>...</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ total_pages }}">{{ total_pages }} </a>
+            </li>
+
+        {% endif %}
+
+        {% if number < total_pages %}
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ next_page_number }}">›</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="{{ list_url }}?page={{ total_pages }}">&raquo;</a>
+            </li>
+        {% endif %}
+
+    </ul>
+</nav>
