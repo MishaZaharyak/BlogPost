@@ -7,7 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserModel
-        fields = ("first_name", "last_name", "email", "photo", "full_name")
+        fields = ('id', "first_name", "last_name", "email", "photo", "full_name")
 
     def get_full_name(self, obj):
         return str(obj)

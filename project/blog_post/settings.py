@@ -181,7 +181,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.FormParser',
         'rest_framework.parsers.MultiPartParser',
     ],
-    # 'EXCEPTION_HANDLER': 'api.v1.utils.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'utils.exception_hendler.custom_exception_handler',
 }
 
 # JWT token
