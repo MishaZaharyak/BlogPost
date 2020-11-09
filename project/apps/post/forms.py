@@ -4,12 +4,14 @@ from apps.user.models import VisitorModel
 
 
 class PostForm(forms.ModelForm):
+    """ Post admin form """
     class Meta:
         model = PostModel
         exclude = ('author', "created_at", "updated_at")
 
 
 class PostCommentForm(forms.ModelForm):
+    """ Post comment admin form """
     class Meta:
         model = PostCommentModel
         fields = ('text',)
@@ -18,6 +20,7 @@ class PostCommentForm(forms.ModelForm):
         }
 
     def save(self, commit=True, author: VisitorModel = None, post_id: int = None):
+        """ save passing author and post with given comment """
         comment = super().save(commit=False)
         comment.author = author
         comment.post_id = post_id

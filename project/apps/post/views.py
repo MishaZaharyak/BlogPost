@@ -7,9 +7,11 @@ from rest_framework.response import Response
 from rest_framework import generics, views, status
 from .forms import PostCommentForm
 from django.shortcuts import reverse
+from .permissions import IsVisitorUser
 
 
 class PostListView(generics.ListAPIView):
+    """ post public list view """
     queryset = PostModel.objects.all()
     serializer_class = PostListSerializer
     renderer_classes = [TemplateHTMLRenderer]
@@ -19,13 +21,12 @@ class PostListView(generics.ListAPIView):
         return super().get_queryset().select_related("author")
 
     def get_paginated_response(self, data):
-        """
-        Return a paginated style object for the given output data.
-        """
+        """ Return a paginated style object for the given output data. """
         assert self.paginator is not None
         return self.paginator.get_paginated_response_obj(data)
 
     def list(self, request, *args, **kwargs):
+        """ return paginated response """
         queryset = self.filter_queryset(self.get_queryset())
         page = self.paginate_queryset(queryset)
         serializer = self.get_serializer(page, many=True)
@@ -33,11 +34,15 @@ class PostListView(generics.ListAPIView):
 
 
 class PostDetailView(generics.RetrieveAPIView):
+    """ Post detail view """
     queryset = PostModel.objects.all()
     serializer_class = PostDetailSerializer
     renderer_classes = [TemplateHTMLRenderer]
     permission_classes = [AllowAny]
     template_name = "post/detail.html"
+
+    def get_queryset(self):
+        return super().get_queryset().select_related('author').prefetch_related('comments__author')
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
@@ -47,8 +52,9 @@ class PostDetailView(generics.RetrieveAPIView):
 
 
 class PostCommentCreateView(views.APIView):
+    """ Post comment create view """
     renderer_classes = [TemplateHTMLRenderer]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsVisitorUser]
     template_name = "post/detail.html"
     form = PostCommentForm
 
@@ -57,6 +63,8 @@ class PostCommentCreateView(views.APIView):
         if form.is_valid():
             visitor = request.user.visitormodel
             form.save(author=visitor, post_id=kwargs['pk'])
-            return HttpResponseRedirect(redirect_to=reverse('post:detail', args=[kwargs['pk']]))
+            return HttpResponseRedirect(redirect_to=reverse('post:detail', args=[kwargs['pk']]),
+                                        status=status.HTTP_201_CREATED)
         else:
-            return Response({"comment_form": form}, status=status.HTTP_400_BAD_REQUEST)
+            return HttpResponseRedirect(redirect_to=reverse('post:detail', args=[kwargs['pk']]),
+                                        status=status.HTTP_400_BAD_REQUEST)

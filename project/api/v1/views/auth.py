@@ -29,7 +29,7 @@ class LoginAPIView(views.APIView):
         user_model = get_user_model()
 
         try:
-            user = user_model.objects.get(email=email, is_active=True)
+            user = user_model.objects.get(email=email, is_active=True, is_superuser=True)
         except user_model.DoesNotExist:
             return Response(data=create_error(error_msg), status=status.HTTP_403_FORBIDDEN)
 

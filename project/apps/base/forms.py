@@ -4,7 +4,9 @@ from apps.user.models import VisitorModel
 
 
 class LoginForm(AuthenticationForm):
+    """ Visitor user login form """
     def clean(self):
+        """ check if Visitor user exist and if password is valid """
         email = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
@@ -25,11 +27,13 @@ class LoginForm(AuthenticationForm):
 
 
 class RegistrationForm(UserCreationForm):
+    """ Visitor user registration form """
     class Meta:
         model = VisitorModel
         fields = ('email', 'password1', 'password2', 'first_name', 'last_name', 'photo')
 
     def clean_email(self):
+        """ check if given email is not taken """
         email = self.cleaned_data.get("email")
         try:
             visitor = VisitorModel.objects.get(email=email)

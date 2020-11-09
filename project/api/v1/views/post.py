@@ -6,6 +6,7 @@ from apps.post.models import PostModel
 
 
 class PostCreateView(generics.CreateAPIView):
+    """ post API create view """
     queryset = PostModel.objects.all()
     permission_classes = [IsAuthenticated, IsSuperUser]
     serializer_class = PostWriteSerializer
@@ -14,4 +15,5 @@ class PostCreateView(generics.CreateAPIView):
         return super().get_queryset().select_related('author')
 
     def perform_create(self, serializer):
+        # save current user as an author
         serializer.save(author=self.request.user)

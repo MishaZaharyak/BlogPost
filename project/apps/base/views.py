@@ -7,6 +7,7 @@ from apps.base.forms import LoginForm, RegistrationForm
 
 
 class LoginView(DjangoLoginView):
+    """ Visitor user login view """
     form_class = LoginForm
 
     def get_success_url(self):
@@ -14,6 +15,7 @@ class LoginView(DjangoLoginView):
 
 
 class RegistrationView(CreateView):
+    """ Visitor user registration view """
     form_class = RegistrationForm
     template_name = 'registration/registration.html'
 
@@ -22,5 +24,6 @@ class RegistrationView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+        # log user in
         auth_login(self.request, self.object.usermodel_ptr)
         return HttpResponseRedirect(self.get_success_url())

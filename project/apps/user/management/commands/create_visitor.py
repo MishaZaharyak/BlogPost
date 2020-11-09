@@ -3,6 +3,7 @@ from apps.user.models import VisitorModel
 
 
 class Command(BaseCommand):
+    """ create visitor user """
     help = 'Enter email and password to create a super user'
 
     def handle(self, *args, **options):

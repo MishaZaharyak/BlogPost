@@ -5,7 +5,6 @@ from apps.user.serializers import UserSerializer, VisitorSerializer
 
 class PostListSerializer(serializers.ModelSerializer):
     """ Post model list serializer """
-    created_at = serializers.DateTimeField(format="%d.%m.%Y %H:%M")
     author = serializers.SerializerMethodField()
 
     class Meta:

@@ -3,9 +3,7 @@ from rest_framework.response import Response
 
 
 class CustomPagination(pagination.PageNumberPagination):
-    """
-    provides custom paginate response, in addition returns current user data for each list action request
-    """
+    """ provides custom paginate response """
     page_size_query_param = 'per_page'
 
     def get_paginated_response(self, data):
@@ -18,6 +16,7 @@ class CustomPagination(pagination.PageNumberPagination):
         }, status=200)
 
     def get_paginated_response_obj(self, data):
+        """ provides paginated object """
         previous_page_number = self.page.previous_page_number() if self.page.has_previous() else None
         next_page_number = self.page.next_page_number() if self.page.has_next() else None
 

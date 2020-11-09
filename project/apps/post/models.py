@@ -28,3 +28,8 @@ class PostCommentModel(DateTimeAbstractModel):
     # relations
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(VisitorModel, on_delete=models.CASCADE, related_name="my_comments")
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = "Post Comment"
+        verbose_name_plural = "Posts Comments"

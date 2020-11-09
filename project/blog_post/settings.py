@@ -182,6 +182,7 @@ REST_FRAMEWORK = {
         'rest_framework.parsers.MultiPartParser',
     ],
     'EXCEPTION_HANDLER': 'utils.exception_hendler.custom_exception_handler',
+    "DATETIME_FORMAT": "%d.%m.%Y %H:%M"
 }
 
 # JWT token
