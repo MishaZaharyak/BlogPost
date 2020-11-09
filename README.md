@@ -33,3 +33,6 @@ fill required fields, press save
    user created, go to main page and press Register button
    
 2) fill required fields and pres save
+
+3) also you can create visitor user through console, the same
+way you create an admin user but this time run `python manage.py create_visitor`
